@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165599326744",
+    "project_id": "sertidrive",
+    "storage_bucket": "sertidrive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165599326744:android:949c528f0da3f91225496d",
+        "android_client_info": {
+          "package_name": "com.serticode.sertidrive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165599326744-13au2j4n85g04qg3dtk3cr9jf7i7ul0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW1LRptp-WolGazxfe05X8cRtDWCDEqr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165599326744-13au2j4n85g04qg3dtk3cr9jf7i7ul0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
