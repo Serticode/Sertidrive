@@ -1,6 +1,5 @@
-# sertidrive
-
-A new Flutter project.
+# Sertidrive
+A Flutter project to help me learn how to use Firebase
 
 ## Getting Started
 
