@@ -1,5 +1,32 @@
 # Sertidrive
-A Flutter project to help me learn how to use Firebase
+
+A Flutter project built as a means to learn Firebase.
+
+## Sertidrive Folders
+
+    Screens - This contains different app screens that can be navigated to.
+        The screens folder is subdivided into 3. Authenticate, Home, Others.
+
+        Authenticate - This contains 3 files. Authenticate, Register, SignIn.
+
+            Authenticate.dart - the class that toggles between the SignIn.dart and Register.dart pages.
+
+            Register.dart - as the name implies, the register screen.
+
+            SignIn.dart - the SignIn screen.
+
+        Home - This contains 3 files. Home, userFoldersList, wrapper.
+
+             Home.dart - The HomeScreen, after Logging in or Registering successfully.
+
+             userFoldersList.dart - contains the class and methods, written, to retrieve the firebase storage root directory, subdirectories and files in the logged in users account.
+
+             Wrapper.dart - this toggles between the Authenticate screen { when no user is logged in } and the Home screen { when there is an active user or a logged in user} .
+
+        Others - Contains other important screens. example [
+            "audioList screen",
+            "uploads screen",
+        ]
 
 ## Getting Started
 
