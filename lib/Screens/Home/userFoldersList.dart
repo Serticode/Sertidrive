@@ -40,7 +40,7 @@ class Folders {
     return audiosDirectoryResult.items;
   }
 
-  Future<void> listDocumentsFolderContent({String email}) async {
+  Future<List<Reference>> listDocumentsFolderContent({String email}) async {
     //!DOCUMENTS DIRECTORY
     _storage.ListResult filesDirectoryResult = await _storage
         .FirebaseStorage.instance
@@ -49,6 +49,7 @@ class Folders {
     filesDirectoryResult.items.forEach((element) {
       print("Found File: $element");
     });
+    return filesDirectoryResult.items;
   }
 
 }

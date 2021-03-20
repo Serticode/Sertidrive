@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sertidrive/Models/user.dart';
 import 'package:sertidrive/Screens/Home/userFoldersList.dart';
 import 'package:sertidrive/Screens/Others/audios.dart';
+import 'package:sertidrive/Screens/Others/documents.dart';
 import 'package:sertidrive/Screens/Others/uploads.dart';
 import 'package:sertidrive/Services/auth.dart';
 import 'package:sertidrive/Shared/constants.dart';
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
       showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Scaffold( 
+          return Scaffold(
             appBar: AppBar(
               title: Text("Select File"),
             ),
@@ -200,8 +201,28 @@ class _HomeState extends State<Home> {
               style: homePageTextStyle),
           onTap: () {
             print("$index WAS TAPPED !!!");
-            switch (index) {
-              case 0:
+            switch (folders
+                .elementAt(index)
+                .toString()
+                .split("/")
+                .last
+                .replaceAll(")", "")) {
+              case "Audios":
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => getAudiosList(),
+                ));
+                break;
+              case "Documents":
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => getDocumentsList(),
+                ));
+                break;
+              case "Images":
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => getAudiosList(),
+                ));
+                break;
+              case "Videos":
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => getAudiosList(),
                 ));
@@ -216,4 +237,5 @@ class _HomeState extends State<Home> {
   }
 
   Widget getAudiosList() => Audios();
+  Widget getDocumentsList() => Documents();
 }
