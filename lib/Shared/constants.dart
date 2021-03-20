@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sertidrive/Shared/clipper.dart';
 
 //TEXT STYLES
 var scaffoldMessengerTextStyle = TextStyle(
@@ -49,4 +50,35 @@ String formatBytes({int bytes, int toDecimalPlaces}) {
     return ((bytes / pow(1024, i)).toStringAsFixed(toDecimalPlaces)) +
         ' ' +
         suffixes[i];
+  }
+
+//CLIPPER
+Widget curve() {
+    return Container(
+        child: Stack(
+      children: <Widget>[
+        //stack overlaps widgets
+        Opacity(
+          //semi red clipPath with more height and with 0.5 opacity
+          opacity: 0.5,
+          child: ClipPath(
+            clipper: WaveClipper(), //set our custom wave clipper
+            child: Container(
+              color: Colors.blue[900],
+              height: 100,
+            ),
+          ),
+        ),
+
+        ClipPath(
+          //upper clipPath with less height
+          clipper: WaveClipper(), //set our custom wave clipper.
+          child: Container(
+            color: Colors.blue[800],
+            height: 90,
+            alignment: Alignment.center,
+          ),
+        ),
+      ],
+    ));
   }

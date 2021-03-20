@@ -4,50 +4,46 @@ import 'package:sertidrive/Screens/Home/userFoldersList.dart';
 import 'package:sertidrive/Shared/constants.dart';
 import 'package:provider/provider.dart';
 
-class Audios extends StatefulWidget {
+class Images extends StatefulWidget {
   @override
-  _AudiosState createState() => _AudiosState();
+  _ImagesState createState() => _ImagesState();
 }
 
-class _AudiosState extends State<Audios> {
+class _ImagesState extends State<Images> {
   final _foldersObject = Folders();
-  List audiosFolderContent = [];
+  List imagesFolderContent = [];
 
   @override
-  void didChangeDependencies() async {
-    String email = Provider.of<MyUserModel>(context).email;
-
-    var items = await _foldersObject.listAudiosFolderContent(email: email);
-
-    if (items != null) {
-      setState(() {
-        items.forEach((element) {
-          audiosFolderContent.add(element);
-        });
-      });
-    }
-
-    super.didChangeDependencies();
+  void initState() {
+    imagesList();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    String email = Provider.of<MyUserModel>(context).email;
+
+    setLists() async {
+      imagesFolderContent =
+          await _foldersObject.listImagesFolderContent(email: email);
+    }
+
+    setState(() {
+      setLists();
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Sertidrive"),
       ),
-      body: Column(
-          children: <Widget>[
-            curve(),
-            Expanded(
-              child: audioList(buildContext: context, folders: audiosFolderContent),
-            ),
-          ],
-        ),
+      body: Container(
+        padding: EdgeInsets.all(15.0),
+        child: imagesList(context: context, folders: imagesFolderContent),
+      ),
     );
   }
 
-  Widget audioList({BuildContext buildContext, List folders}) {
+  Widget imagesList({BuildContext context, List folders}) {
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(
         color: Theme.of(context).primaryColor,
@@ -60,7 +56,7 @@ class _AudiosState extends State<Audios> {
         return ListTile(
           contentPadding: EdgeInsets.all(10.0),
           leading: Icon(
-            Icons.audiotrack_sharp,
+            Icons.photo_sharp,
             size: 40.0,
           ),
           title: Text(

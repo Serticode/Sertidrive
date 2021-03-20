@@ -4,8 +4,10 @@ import 'package:sertidrive/Models/user.dart';
 import 'package:sertidrive/Screens/Home/userFoldersList.dart';
 import 'package:sertidrive/Screens/Others/audios.dart';
 import 'package:sertidrive/Screens/Others/documents.dart';
+import 'package:sertidrive/Screens/Others/images.dart';
 import 'package:sertidrive/Screens/Others/uploads.dart';
 import 'package:sertidrive/Services/auth.dart';
+import 'package:sertidrive/Shared/clipper.dart';
 import 'package:sertidrive/Shared/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sertidrive/Services/database.dart';
@@ -35,29 +37,24 @@ class _HomeState extends State<Home> {
   ];
 
   List rootFolders = [];
-  List imagesFolderContent = [];
-  List videosFolderContent = [];
-  List documentsFolderContent = [];
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() async {
+    String email = Provider.of<MyUserModel>(context).email;
+
+    var items = await _foldersObject.listRootFolders(email: email);
+
+    if (items != null) {
+      setState(() {
+        rootFolders.addAll(items);
+      });
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String email = Provider.of<MyUserModel>(context).email;
-
-    setLists() async {
-      rootFolders = await _foldersObject.listRootFolders(email: email);
-      /* imagesFolderContent =
-          await _foldersObject.listImagesFolderContent(email: email); */
-    }
-
-    setState(() {
-      setLists();
-    });
-
     selectFileType() {
       showModalBottomSheet(
         context: context,
@@ -140,6 +137,7 @@ class _HomeState extends State<Home> {
         floatingActionButton:
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           FloatingActionButton(
+            heroTag: "New Folder Button",
             elevation: 20.0,
             backgroundColor: Theme.of(context).primaryColor,
             child: Icon(
@@ -155,6 +153,7 @@ class _HomeState extends State<Home> {
             height: 10.0,
           ),
           FloatingActionButton(
+            heroTag: "Cloud Upload Button",
             elevation: 20.0,
             backgroundColor: Theme.of(context).primaryColor,
             child: Icon(
@@ -177,36 +176,6 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  Widget curve() {
-    return Container(
-        child: Stack(
-      children: <Widget>[
-        //stack overlaps widgets
-        Opacity(
-          //semi red clipPath with more height and with 0.5 opacity
-          opacity: 0.5,
-          child: ClipPath(
-            clipper: WaveClipper(), //set our custom wave clipper
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              height: 100,
-            ),
-          ),
-        ),
-
-        ClipPath(
-          //upper clipPath with less height
-          clipper: WaveClipper(), //set our custom wave clipper.
-          child: Container(
-            color: Colors.blue[800],
-            height: 90,
-            alignment: Alignment.center,
-          ),
-        ),
-      ],
-    ));
   }
 
   Widget baseList({BuildContext buildContext, List folders}) {
@@ -253,7 +222,7 @@ class _HomeState extends State<Home> {
                 break;
               case "Images":
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => getAudiosList(),
+                  builder: (_) => getImagesList(),
                 ));
                 break;
               case "Videos":
@@ -272,40 +241,7 @@ class _HomeState extends State<Home> {
 
   Widget getAudiosList() => Audios();
   Widget getDocumentsList() => Documents();
+  Widget getImagesList() => Images();
 }
 
 //Custom CLipper class with Path
-class WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-    path.lineTo(
-        0, size.height); //start path with this if you are making at bottom
-
-    var firstStart = Offset(size.width / 5, size.height);
-    //fist point of quadratic bezier curve
-    var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
-    //second point of quadratic bezier curve
-    path.quadraticBezierTo(
-        firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
-
-    var secondStart =
-        Offset(size.width - (size.width / 3.24), size.height - 105);
-    //third point of quadratic bezier curve
-    var secondEnd = Offset(size.width, size.height - 10);
-    //fourth point of quadratic bezier curve
-    path.quadraticBezierTo(
-        secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
-
-    path.lineTo(
-        size.width, 0); //end with this path if you are making wave at bottom
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false; //if new instance have different instance than old instance
-    //then you must return true;
-  }
-}
