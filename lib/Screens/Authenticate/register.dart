@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
         ? Loading()
         : Scaffold(
             appBar: AppBar(
-              title: Text("Register on PazCloud"),
+              title: Text("Register on Sertidrive"),
               actions: <Widget>[
                 TextButton.icon(
                   onPressed: () {

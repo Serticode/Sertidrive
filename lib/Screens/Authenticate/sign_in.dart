@@ -27,7 +27,7 @@ class _SignInState extends State<SignIn> {
         ? Loading()
         : Scaffold(
             appBar: AppBar(
-              title: Text("Sign in to PazCloud"),
+              title: Text("Sign in to Sertidrive"),
               actions: <Widget>[
                 TextButton.icon(
                   onPressed: () {
