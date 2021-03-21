@@ -36,14 +36,19 @@ class _ImagesState extends State<Images> {
       appBar: AppBar(
         title: Text("Sertidrive"),
       ),
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child: imagesList(context: context, folders: imagesFolderContent),
+      body: Column(
+        children: <Widget>[
+          curve(),
+          Expanded(
+            child:
+                imagesList(buildContext: context, folders: imagesFolderContent),
+          ),
+        ],
       ),
     );
   }
 
-  Widget imagesList({BuildContext context, List folders}) {
+  Widget imagesList({BuildContext buildContext, List folders}) {
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(
         color: Theme.of(context).primaryColor,
