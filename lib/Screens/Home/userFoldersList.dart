@@ -6,7 +6,6 @@ class Folders {
   Future<List<Reference>> listRootFolders({String email}) async {
     _storage.ListResult rootDirectoryResult =
         await _storage.FirebaseStorage.instance.ref(email).listAll();
-
     return rootDirectoryResult.prefixes;
   }
 
@@ -15,28 +14,20 @@ class Folders {
     //!IMAGES DIRECTORY
     _storage.ListResult imagesDirectoryResult =
         await _storage.FirebaseStorage.instance.ref("$email/Images").listAll();
-    imagesDirectoryResult.items.forEach((element) {
-      print("Found File: $element");
-    });
     return imagesDirectoryResult.items;
   }
 
-  Future<void> listVideosFolderContent({String email}) async {
+  Future<List<Reference>> listVideosFolderContent({String email}) async {
     //!VIDEOS DIRECTORY
     _storage.ListResult videosDirectoryResult =
         await _storage.FirebaseStorage.instance.ref("$email/Videos").listAll();
-    videosDirectoryResult.items.forEach((element) {
-      print("Found File: $element");
-    });
+    return videosDirectoryResult.items;
   }
 
   Future<List<Reference>> listAudiosFolderContent({String email}) async {
     //!AUDIOS DIRECTORY
     _storage.ListResult audiosDirectoryResult =
         await _storage.FirebaseStorage.instance.ref("$email/Audios").listAll();
-    audiosDirectoryResult.items.forEach((element) {
-      print("Found File: $element");
-    });
     return audiosDirectoryResult.items;
   }
 
@@ -46,10 +37,6 @@ class Folders {
         .FirebaseStorage.instance
         .ref("$email/Documents")
         .listAll();
-    filesDirectoryResult.items.forEach((element) {
-      print("Found File: $element");
-    });
     return filesDirectoryResult.items;
   }
-
 }

@@ -40,12 +40,7 @@ class AuthService {
       print("Account - ${user.email} created !");
 
       //!CREATE A NEW DOCUMENT FOR THE USER WITH USER EMAIL
-      await DatabaseService(email: user.email).updateUserData(
-        /* noOfImages: 0,
-        noOfVideos: 0,
-        noOfAudios: 0,
-        noOfFiles: 0, */
-      );
+      await DatabaseService(email: user.email).updateUserData();
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {

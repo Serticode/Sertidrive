@@ -15,7 +15,6 @@ class DatabaseService {
       try {
         DocumentSnapshot snapshot = await transaction.get(userReference);
         if (!snapshot.exists) {
-          print("UPDATE USER DATA - !SNAPSHOT.EXISTS");
           userReference.set({
             "Number of Images ": 0,
             "Number of Videos ": 0,
@@ -23,7 +22,6 @@ class DatabaseService {
             "Number of Documents ": 0,
           });
         } else {
-          print("UPDATE USER DATA - SNAPSHOT.EXISTS");
           if (noOfImages != null) {
             int newNoOfImages =
                 await snapshot.data()["Number of Images "] + noOfImages;
@@ -58,6 +56,4 @@ class DatabaseService {
   Stream<QuerySnapshot> get userData {
     return userCollection.snapshots();
   }
-
-  String getUserEmail() => email;
 }

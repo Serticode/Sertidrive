@@ -129,6 +129,7 @@ class _UploadState extends State<Upload> {
                   backgroundColor: Theme.of(context).primaryColor,
                 ));
               }
+              didChangeDependencies();
             },
             icon: Icon(
               Icons.cloud_upload_sharp,
@@ -169,7 +170,6 @@ class _UploadState extends State<Upload> {
                               fileType = FileType.image;
                             });
                             _selectFile(type: FileType.image);
-                            print(selectedFileNames);
                           },
                         ),
                       )
@@ -247,7 +247,6 @@ class _UploadState extends State<Upload> {
                             ],
                           ),
                           onTap: () {
-                            print("OTHER FILES ADD ICON PRESSED");
                             switch (widget.index) {
                               case 1:
                                 _selectFile(type: FileType.video);
@@ -287,7 +286,6 @@ class _UploadState extends State<Upload> {
                             Icons.delete,
                           ),
                           onPressed: () {
-                            print("ELEMENT DELETE BUTTON PRESSED !");
                             setState(() {
                               selectedFileNames.remove(
                                   selectedFileNames.elementAt(index - 1));

@@ -6,8 +6,8 @@ import 'package:sertidrive/Screens/Others/audios.dart';
 import 'package:sertidrive/Screens/Others/documents.dart';
 import 'package:sertidrive/Screens/Others/images.dart';
 import 'package:sertidrive/Screens/Others/uploads.dart';
+import 'package:sertidrive/Screens/Others/videos.dart';
 import 'package:sertidrive/Services/auth.dart';
-import 'package:sertidrive/Shared/clipper.dart';
 import 'package:sertidrive/Shared/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sertidrive/Services/database.dart';
@@ -18,7 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ScrollPhysics homeStateListViewScrollPhysics = NeverScrollableScrollPhysics();
   final AuthService _auth = AuthService();
   final _foldersObject = Folders();
 
@@ -93,11 +92,9 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       onTap: () {
-                        print("BOTTOM SHEET ITEM CLICKED");
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => Upload(index: index),
                         ));
-                        print(index);
                       },
                     ),
                   );
@@ -203,7 +200,6 @@ class _HomeState extends State<Home> {
                   .replaceAll(")", ""),
               style: homePageTextStyle),
           onTap: () {
-            print("$index WAS TAPPED !!!");
             switch (folders
                 .elementAt(index)
                 .toString()
@@ -227,7 +223,7 @@ class _HomeState extends State<Home> {
                 break;
               case "Videos":
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => getAudiosList(),
+                  builder: (_) => getVideosList(),
                 ));
                 break;
               default:
@@ -242,6 +238,5 @@ class _HomeState extends State<Home> {
   Widget getAudiosList() => Audios();
   Widget getDocumentsList() => Documents();
   Widget getImagesList() => Images();
+  Widget getVideosList() => Videos();
 }
-
-//Custom CLipper class with Path

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+//Custom CLipper class with Path
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
