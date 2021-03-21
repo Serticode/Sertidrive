@@ -14,24 +14,24 @@ class _ImagesState extends State<Images> {
   List imagesFolderContent = [];
 
   @override
-  void initState() {
-    imagesList();
-    super.initState();
+  void didChangeDependencies() async {
+    String email = Provider.of<MyUserModel>(context).email;
+
+    var items = await _foldersObject.listImagesFolderContent(email: email);
+
+    if (items != null) {
+      setState(() {
+        items.forEach((element) {
+          imagesFolderContent.add(element);
+        });
+      });
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    String email = Provider.of<MyUserModel>(context).email;
-
-    setLists() async {
-      imagesFolderContent =
-          await _foldersObject.listImagesFolderContent(email: email);
-    }
-
-    setState(() {
-      setLists();
-    });
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Sertidrive"),
