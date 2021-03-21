@@ -14,36 +14,41 @@ class _DocumentsState extends State<Documents> {
   List documentsFolderContent = [];
 
   @override
-  void initState() {
-    documentsList();
-    super.initState();
+  void didChangeDependencies() async {
+    String email = Provider.of<MyUserModel>(context).email;
+
+    var items = await _foldersObject.listDocumentsFolderContent(email: email);
+
+    if (items != null) {
+      setState(() {
+        items.forEach((element) {
+          documentsFolderContent.add(element);
+        });
+      });
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    String email = Provider.of<MyUserModel>(context).email;
-
-    setLists() async {
-      documentsFolderContent =
-          await _foldersObject.listDocumentsFolderContent(email: email);
-    }
-
-    setState(() {
-      setLists();
-    });
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Sertidrive"),
       ),
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child: documentsList(context: context, folders: documentsFolderContent),
+      body: Column(
+        children: <Widget>[
+          curve(),
+          Expanded(
+            child:
+                documentsList(buildContext: context, folders: documentsFolderContent),
+          ),
+        ],
       ),
     );
   }
 
-  Widget documentsList({BuildContext context, List folders}) {
+  Widget documentsList({BuildContext buildContext, List folders}) {
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(
         color: Theme.of(context).primaryColor,
