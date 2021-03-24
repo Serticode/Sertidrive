@@ -12,21 +12,20 @@ class Images extends StatefulWidget {
 class _ImagesState extends State<Images> {
   final _foldersObject = Folders();
   List imagesFolderContent = [];
+  List imageUrls = [];
 
   @override
   void didChangeDependencies() async {
     String email = Provider.of<MyUserModel>(context).email;
-
     var items = await _foldersObject.listImagesFolderContent(email: email);
 
     if (items != null) {
       setState(() {
-        items.forEach((element) {
+        items.forEach((element) async {
           imagesFolderContent.add(element);
         });
       });
     }
-
     super.didChangeDependencies();
   }
 
@@ -49,13 +48,9 @@ class _ImagesState extends State<Images> {
   }
 
   Widget imagesList({BuildContext buildContext, List folders}) {
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(
-        color: Theme.of(context).primaryColor,
-        indent: 70.0,
-        thickness: 2,
-        height: 8.0,
-      ),
+    return GridView.builder(
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemCount: folders == null ? 0 : folders.length,
       itemBuilder: (context, index) {
         return ListTile(
