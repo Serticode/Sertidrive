@@ -31,7 +31,15 @@ class StorageService {
       return await _storage
           .ref()
           .child('$email/Videos/${element.path.split("/").last}')
-          .putFile(element);
+          .putFile(element)
+          .then((element) async {
+        String url = await element.ref.getDownloadURL();
+        DatabaseService(email: email).updateDownloadLinks(
+            videosDownloadLinks: url);
+        print("CALLING DATABASE SERVICE - UPDATE DOWNLOAD LINKS !!");
+        //element.ref.getDownloadURL()
+      }).whenComplete(() =>
+              print("DATABASE SERVICE - UPDATE DOWNLOAD LINKS COMPLETED!!"));
     });
   }
 
@@ -41,7 +49,15 @@ class StorageService {
       return await _storage
           .ref()
           .child('$email/Audios/${element.path.split("/").last}')
-          .putFile(element);
+          .putFile(element)
+          .then((element) async {
+        String url = await element.ref.getDownloadURL();
+        DatabaseService(email: email).updateDownloadLinks(
+            audiosDownloadLinks: url);
+        print("CALLING DATABASE SERVICE - UPDATE DOWNLOAD LINKS !!");
+        //element.ref.getDownloadURL()
+      }).whenComplete(() =>
+              print("DATABASE SERVICE - UPDATE DOWNLOAD LINKS COMPLETED!!"));
     });
   }
 
@@ -51,7 +67,15 @@ class StorageService {
       return await _storage
           .ref()
           .child('$email/Documents/${element.path.split("/").last}')
-          .putFile(element);
+          .putFile(element)
+          .then((element) async {
+        String url = await element.ref.getDownloadURL();
+        DatabaseService(email: email).updateDownloadLinks(
+            filesDownloadLinks: url);
+        print("CALLING DATABASE SERVICE - UPDATE DOWNLOAD LINKS !!");
+        //element.ref.getDownloadURL()
+      }).whenComplete(() =>
+              print("DATABASE SERVICE - UPDATE DOWNLOAD LINKS COMPLETED!!"));
     });
   }
 }
