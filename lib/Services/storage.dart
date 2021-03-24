@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:sertidrive/Services/database.dart';
 
 class StorageService {
   //!STORAGE REFERENCE
@@ -12,7 +13,13 @@ class StorageService {
       return await _storage
           .ref()
           .child('$email/Images/${element.path.split("/").last}')
-          .putFile(element);
+          .putFile(element)
+          .then((element) async {
+        DatabaseService(email: email).updateDownloadLinks(
+            imageDownloadLinks: await element.ref.getDownloadURL());
+        print("CALLING DATABASE SERVICE - UPDATE DOWNLOAD LINKS !!");
+        //element.ref.getDownloadURL()
+      });
     });
   }
 
