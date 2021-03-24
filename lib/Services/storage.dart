@@ -15,11 +15,13 @@ class StorageService {
           .child('$email/Images/${element.path.split("/").last}')
           .putFile(element)
           .then((element) async {
+        String url = await element.ref.getDownloadURL();
         DatabaseService(email: email).updateDownloadLinks(
-            imageDownloadLinks: await element.ref.getDownloadURL());
+            imageDownloadLinks: url);
         print("CALLING DATABASE SERVICE - UPDATE DOWNLOAD LINKS !!");
         //element.ref.getDownloadURL()
-      });
+      }).whenComplete(() =>
+              print("DATABASE SERVICE - UPDATE DOWNLOAD LINKS COMPLETED!!"));
     });
   }
 

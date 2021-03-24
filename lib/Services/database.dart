@@ -9,7 +9,10 @@ class DatabaseService {
   final userCollection = FirebaseFirestore.instance.collection("User Data");
 
   Future updateUserData(
-      {int noOfImages, int noOfVideos, int noOfAudios, int noOfFiles}) async {
+      {int noOfImages,
+      int noOfVideos,
+      int noOfAudios,
+      int noOfFiles,}) async {
     DocumentReference userReference = userCollection.doc(email);
     FirebaseFirestore.instance.runTransaction(
       (transaction) async {
@@ -60,7 +63,7 @@ class DatabaseService {
       String audiosDownloadLinks,
       String filesDownloadLinks}) async {
     DocumentReference userReference =
-        userCollection.doc("$email\/downloadLinks}");
+        userCollection.doc("$email _downloadLinks");
     FirebaseFirestore.instance.runTransaction((transaction) async {
       try {
         DocumentSnapshot snapshot = await transaction.get(userReference);
