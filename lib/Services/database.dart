@@ -8,11 +8,12 @@ class DatabaseService {
   //!COLLECTION REFERENCE
   final userCollection = FirebaseFirestore.instance.collection("User Data");
 
-  Future updateUserData(
-      {int noOfImages,
-      int noOfVideos,
-      int noOfAudios,
-      int noOfFiles,}) async {
+  Future updateUserData({
+    int noOfImages,
+    int noOfVideos,
+    int noOfAudios,
+    int noOfFiles,
+  }) async {
     DocumentReference userReference = userCollection.doc(email);
     FirebaseFirestore.instance.runTransaction(
       (transaction) async {
@@ -53,7 +54,8 @@ class DatabaseService {
         } catch (e) {
           print("FIRESTORE TRANSACTION ERROR: $e");
         }
-      }, /* timeout: Duration(minutes: 2) */
+      },
+      timeout: Duration(minutes: 2),
     );
   }
 
@@ -85,18 +87,21 @@ class DatabaseService {
           } else if (videosDownloadLinks != null) {
             String newVideoDownloadURL =
                 await snapshot.data()["Video DownloadLinks "] +
+                    "\n" +
                     videosDownloadLinks;
             transaction.update(
                 userReference, {"Video DownloadLinks ": newVideoDownloadURL});
           } else if (audiosDownloadLinks != null) {
             String newAudioDownloadURL =
                 await snapshot.data()["Audio DownloadLinks "] +
+                    "\n" +
                     audiosDownloadLinks;
             transaction.update(
                 userReference, {"Audio DownloadLinks ": newAudioDownloadURL});
           } else if (filesDownloadLinks != null) {
             String newFilesDownloadURL =
                 await snapshot.data()["Documents DownloadLinks "] +
+                    "\n" +
                     filesDownloadLinks;
             transaction.update(userReference,
                 {"Documents DownloadLinks ": newFilesDownloadURL});
