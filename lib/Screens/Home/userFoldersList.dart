@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as _storage;
 import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:sertidrive/Services/database.dart';
 
 class Folders {
   //!GET LIST OF DIRECTORIES IN USERS ROOT DIRECTORY
@@ -38,5 +40,13 @@ class Folders {
         .ref("$email/Documents")
         .listAll();
     return filesDirectoryResult.items;
+  }
+
+  Future listDownloadLinks({String email, String type}) async {
+    final userDownloadCollection =
+        FirebaseFirestore.instance.collection("$email _downloadLinks");
+    List downloadLinks;
+    userDownloadCollection.doc().snapshots();
+    return downloadLinks;
   }
 }

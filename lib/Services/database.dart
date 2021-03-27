@@ -119,4 +119,11 @@ class DatabaseService {
   Stream<QuerySnapshot> get userData {
     return userCollection.snapshots();
   }
+
+  //!GET USER DOWNLOAD LINKS STREAM
+  Stream<QuerySnapshot> get getDownloadLinks {
+    final userDownloadCollection = FirebaseFirestore.instance
+        .collection("$email _downloadLinks");
+    return userDownloadCollection.snapshots();
+  }
 }

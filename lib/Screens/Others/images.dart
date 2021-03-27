@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sertidrive/Models/user.dart';
 import 'package:sertidrive/Screens/Home/userFoldersList.dart';
+import 'package:sertidrive/Services/database.dart';
 import 'package:sertidrive/Shared/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,7 @@ class _ImagesState extends State<Images> {
   @override
   void didChangeDependencies() async {
     String email = Provider.of<MyUserModel>(context).email;
+    print("PROVIDER EMAIL: MY USER: $email");
     var items = await _foldersObject.listImagesFolderContent(email: email);
 
     if (items != null) {
@@ -31,18 +34,21 @@ class _ImagesState extends State<Images> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Sertidrive"),
-      ),
-      body: Column(
-        children: <Widget>[
-          curve(),
-          Expanded(
-            child:
-                imagesList(buildContext: context, folders: imagesFolderContent),
-          ),
-        ],
+    return StreamProvider<QuerySnapshot>.value(
+      value: DatabaseService().getDownloadLinks,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Sertidrive"),
+        ),
+        body: Column(
+          children: <Widget>[
+            curve(),
+            Expanded(
+              child: /*  DownloadList(), */ imagesList(
+                  buildContext: context, folders: imagesFolderContent),
+            ),
+          ],
+        ),
       ),
     );
   }
