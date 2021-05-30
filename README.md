@@ -1,6 +1,6 @@
 # Sertidrive
 
-A Flutter project built as a means to learn Firebase.
+A Cloud Storage Flutter project built as a means to learn Firebase.
 
 ## Sertidrive Folders
 
